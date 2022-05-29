@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd ">
+    
+    <changeSet id="before_create_product_table" author="kmetha.pavel">
+        <tagDatabase tag="before_create_product_table"/>
+    </changeSet>
+
+    <changeSet id="create_product_table" author="kmetha.pavel">
+        <createTable tableName="product">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="cost" type="decimal(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manufacture_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manufacturer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(255)"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="status" type="varchar(20)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="manufacturer_id"
+                                 constraintName="fk_product_manufacturer"
+                                 referencedTableName="manufacturer"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
